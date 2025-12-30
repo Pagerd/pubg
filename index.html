@@ -602,6 +602,7 @@ async function saveCache(data=null,cacheName=Mode,test=false){
             RemainingPlayer,
             MatchName,
             Beatmap,
+            NextMap:StageG.map,
             Progress:{round:Progress.round,game:Progress.game},
             Config:{
                 modMultiply:Config.modMultiply,constCoef:Config.constCoef,pointsDecimals:Config.pointsDecimals,
@@ -1603,6 +1604,7 @@ title="只有打开“自动获取分数”时才会自动获取分数，且自�
         }
         StageG.score.clear()
         StageG.score.update()
+        saveCache()
     },
     cmd:{
         part0:[],
