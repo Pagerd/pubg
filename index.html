@@ -590,7 +590,26 @@ async function getOsuData(target='match',id=MID,test=false,param={}){
     }
     return res
 }
-async function saveCache(data,cacheName=Mode,test=false){
+async function saveCache(data=null,cacheName=Mode,test=false){
+    if(!data){
+        data={
+            timestamp:Date.now(),
+            OsuData,
+            MatchResult:MatchResultRank,
+            MatchOrder,
+            Order,
+            RemainingBeatmap,
+            RemainingPlayer,
+            MatchName,
+            Beatmap,
+            Progress:{round:Progress.round,game:Progress.game},
+            Config:{
+                modMultiply:Config.modMultiply,constCoef:Config.constCoef,pointsDecimals:Config.pointsDecimals,
+                showFixed: Config.showFixed,showAward:Config.awardMultiply!=1
+            },
+        }
+    }
+    
     let time=new Date()
     let res = await httpReq('https://cache.flf.moe/cache/mp5pubg_'+cacheName,{api_key:apikey.cache,value:data},'post')
     let error=null
@@ -1010,22 +1029,7 @@ const Progress={
         scoreboard.appendChild(scoreboardHeader)
         for(let x of MatchResultRank)scoreboard.appendChild(PlayerDom[x.username].score)
 
-        saveCache({
-            timestamp:Date.now(),
-            OsuData,
-            MatchResult:MatchResultRank,
-            MatchOrder,
-            Order,
-            RemainingBeatmap,
-            RemainingPlayer,
-            MatchName,
-            Beatmap,
-            Progress:{round:Progress.round,game:Progress.game},
-            Config:{
-                modMultiply:Config.modMultiply,constCoef:Config.constCoef,pointsDecimals:Config.pointsDecimals,
-                showFixed: Config.showFixed,showAward:Config.awardMultiply!=1
-            },
-        })
+        saveCache()
 
         order=Order[Progress.round]
         currentStage.init()
