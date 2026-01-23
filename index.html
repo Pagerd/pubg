@@ -769,7 +769,7 @@ DefaultConfig={
             return sum
         },
         pointsFunction: function(x,n){ // x表示名次，n表示剩余人数，N表示总人数
-            return (n-x+1)*Config.constCoef*100/n
+            return (n-x)*Config.constCoef*100/(n-1)
         },
         rankFunction: function(x,y){
             const alive=y.alive-x.alive
